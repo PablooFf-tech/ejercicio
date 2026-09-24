@@ -1,0 +1,2 @@
+Contenido del archivo 1 - Carpeta 1.
+Documentación base para la práctica de Git y GitHub.

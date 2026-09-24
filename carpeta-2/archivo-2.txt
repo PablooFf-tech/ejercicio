@@ -1,0 +1,2 @@
+Contenido del archivo 2 - Carpeta 2.
+Mapeo de archivos y estructura inicial del proyecto.
