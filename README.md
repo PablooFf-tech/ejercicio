@@ -1,16 +1,15 @@
-# Práctica Git, Ramas y Trabajo con GitHub
+# Práctica: Git, ramas y trabajo con GitHub
 
-**Autor:** Pablo Flores  
-**Perfil:** Desarrollador Full-Stack / Web (en formación)  
+**Alumno:** Pablo Flores  
 **Fecha:** Septiembre 2026  
 
 ---
 
-## 1. Descripción del Proyecto
+## Descripción
 
-Este proyecto es una práctica completa del flujo de trabajo profesional con Git y GitHub. En él se demuestra el control de versiones local, la creación y fusión de ramas de características (`feature/contacto`, `feature/help-page`), el envío de cambios al entorno remoto, y la resolución de divergencias al recibir actualizaciones realizadas directamente en GitHub.com.
+En esta práctica he trabajado con un repositorio local de Git y lo he sincronizado con mi cuenta de GitHub. El objetivo ha sido aprender a manejar ramas (`main`, `feature/contacto` y la ampliación `feature/help-page`), hacer commits organizados, sincronizar cambios entre mi ordenador y el remoto (`push`, `fetch`, `pull`) y entender cómo resolver las diferencias cuando se suben archivos directamente desde GitHub.
 
-### Estructura final del repositorio:
+### Estructura final del proyecto
 
 ```text
 .
@@ -33,57 +32,52 @@ Este proyecto es una práctica completa del flujo de trabajo profesional con Git
 
 ---
 
-## 2. Problemas y Dudas Reales
+## Problemas y dudas
 
-Durante la realización de la práctica se han identificado los siguientes aspectos técnicos clave:
+Durante el desarrollo de la práctica me surgieron algunas dudas reales sobre cómo funciona Git:
 
 1. **Diferencia entre `git fetch` y `git pull`:**
-   - **Observación:** Tras añadir un archivo directamente desde la interfaz web de GitHub y ejecutar `git fetch` localmente, el nuevo archivo no aparecía en el directorio de trabajo del ordenador.
-   - **Explicación:** `git fetch` descarga la información y los objetos del repositorio remoto a la base de datos local de Git (actualizando la referencia `origin/main`), pero **no modifica** la rama de trabajo actual ni sus archivos. Para integrar visual y físicamente los cambios en la carpeta de trabajo se requiere `git pull` (o `git merge origin/main`).
+   - **Lo que ocurrió:** Al subir una imagen desde la web de GitHub y ejecutar `git fetch` en mi terminal, vi que en el estado del repositorio se detectaba el cambio remoto, pero el archivo no aparecía físicamente en mi carpeta.
+   - **Explicación:** Descubrí que `git fetch` solo descarga la información del remoto para que Git local sepa lo que hay nuevo, pero no toca los archivos de mi carpeta de trabajo. Para traer los archivos físicamente tuve que ejecutar `git pull`.
 
-2. **Propagación de cambios entre ramas independientes:**
-   - **Observación:** Al actualizar la rama principal `main` con los cambios del remoto, la rama `feature/contacto` no contenía automáticamente la nueva imagen.
-   - **Explicación:** Cada rama en Git es una línea de tiempo independiente. Para llevar las novedades de `main` a `feature/contacto` fue necesario cambiar a dicha rama (`git switch feature/contacto`) y ejecutar el merge explícito (`git merge main`).
+2. **Actualizar ramas secundarias:**
+   - **Lo que ocurrió:** Tras hacer el `pull` en `main` y traer la imagen de GitHub, cambié a la rama `feature/contacto` y vi que la imagen no estaba ahí.
+   - **Explicación:** Las ramas son independientes. Para tener los cambios de `main` en `feature/contacto`, tuve que ponerme en la rama de contacto (`git switch feature/contacto`) y hacer un `git merge main`.
 
-3. **Vinculación de ramas con `--set-upstream` (`-u`):**
-   - **Observación:** La primera vez que se publica una rama local en GitHub, es imprescindible indicar `--set-upstream origin <rama>`.
-   - **Explicación:** Este comando crea la relación de seguimiento (tracking branch). A partir de ese momento, Git sabe qué rama remota se corresponde con la rama local actual, permitiendo usar simplemente `git push` o `git pull` sin argumentos adicionales.
+3. **Uso de `--set-upstream`:**
+   - **Duda:** ¿Por qué la primera vez hay que poner `--set-upstream origin <rama>`?
+   - **Explicación:** Sirve para enlazar la rama local con la rama de GitHub. Así, a partir de ese momento solo hace falta poner `git push` o `git pull` a secas.
 
 ---
 
-## 3. Historial de la Práctica (`git log --oneline`)
+## Historial de la práctica (`git log --oneline`)
 
-### Fase 1: Estructura inicial en la rama principal (`main`)
-```bash
-$ git log --oneline
+### 1. Historial tras el primer commit en la rama principal (`main`)
+```text
 f87b7fe (HEAD -> main) Crear estructura inicial del proyecto
 ```
 
-### Fase 2: Desarrollo en la rama `feature/contacto`
-```bash
-$ git log --oneline
+### 2. Historial en la rama `feature/contacto`
+```text
 e5c2cad (HEAD -> feature/contacto) Añadir página de contacto
 f87b7fe Crear estructura inicial del proyecto
 ```
 
-### Fase 3: Fusión de `feature/contacto` en la rama principal (`main`)
-```bash
-$ git log --oneline
+### 3. Historial tras hacer merge de `feature/contacto` en `main`
+```text
 e5c2cad (HEAD -> main, feature/contacto) Añadir página de contacto
 f87b7fe Crear estructura inicial del proyecto
 ```
 
-### Fase 4: Ampliación opcional — Desarrollo y fusión de `feature/help-page`
-```bash
-$ git log --oneline
+### 4. Historial tras la ampliación opcional (`feature/help-page`)
+```text
 942431f (HEAD -> main, feature/help-page) Añadir página de ayuda
 e5c2cad (feature/contacto) Añadir página de contacto
 f87b7fe Crear estructura inicial del proyecto
 ```
 
-### Fase 5: Actualización desde el remoto (GitHub) e integración en `feature/contacto`
-```bash
-$ git log --oneline
+### 5. Historial tras traer los cambios de GitHub y actualizar `feature/contacto`
+```text
 d5ef0ea (HEAD -> feature/contacto, main) Subir imagen directamente desde GitHub.com
 942431f (feature/help-page) Añadir página de ayuda
 e5c2cad Añadir página de contacto
@@ -92,59 +86,57 @@ f87b7fe Crear estructura inicial del proyecto
 
 ---
 
-## 4. Observaciones Técnicas
+## Observaciones
 
-- **Trabajo con Ramas (`git branch`, `git switch`):** Las ramas permiten desarrollar funcionalidades de manera aisada sin alterar el código estable de la rama principal (`main`).
-- **Commits:** Representan fotogramas (snapshots) de los cambios preparados en el área de ensayo (*staging*).
-- **Fusión (`git merge`):** Une historiales de distintas ramas. En este proyecto se realizaron fusiones *Fast-Forward* donde el puntero de la rama destino avanzó linealmente hasta el commit más reciente de la rama origen.
-- **Flujo Remoto (`push`, `fetch`, `pull`):**
-  - `git push`: Envía los commits locales al repositorio remoto en GitHub.
-  - `git fetch`: Consulta y descarga las novedades del remoto sin tocar la carpeta local.
-  - `git pull`: Ejecuta un `fetch` seguido de un `merge` directo en la rama local.
+- **Ramas:** Me han permitido trabajar en nuevas secciones (como la página de contacto o la de ayuda) en un sitio separado sin tocar el código de la rama principal hasta que estaba listo.
+- **Commits:** Son como puntos de guardado donde dejamos constancia de qué hemos cambiado y por qué.
+- **Merge:** Sirve para juntar el trabajo de dos ramas. En estos casos ha unido los commits sin problemas.
+- **Diferencia entre Push, Fetch y Pull:**
+  - `git push`: Sube lo que he hecho en mi PC a GitHub.
+  - `git fetch`: Comprueba qué hay de nuevo en GitHub pero sin tocar mis archivos locales.
+  - `git pull`: Descarga las novedades de GitHub y las mezcla en mi carpeta de trabajo.
 
 ---
 
-## 5. Preguntas y Respuestas Teorico-Prácticas
+## Respuestas a las preguntas de la práctica
 
 ### 1. ¿Qué diferencia hay entre el repositorio local y el remoto?
-- **Local (PC):** Es la copia del repositorio que reside en el disco duro del ordenador. Permite trabajar sin conexión a internet, crear ramas, editar archivos y realizar commits.
-- **Remoto (GitHub):** Es el repositorio alojado en los servidores de GitHub en la nube. Sirve como punto centralizado de respaldo, sincronización e integración del código para trabajo colaborativo.
+El repositorio local está guardado en mi propio ordenador (puedo trabajar sin internet). El remoto está alojado en GitHub en la nube y sirve para guardar una copia de respaldo y compartir el código con otras personas.
 
 ### 2. ¿Qué hace `git clone`?
-Descarga una copia completa de un repositorio remoto de GitHub a tu equipo local. Crea el directorio del proyecto, inicializa Git automáticamente y configura la conexión remota llamada `origin`.
+Descarga una copia completa de un repositorio de GitHub a nuestro ordenador y lo deja listo para empezar a trabajar con Git.
 
 ### 3. ¿Para qué sirve `git remote -v`?
-Muestra las URLs de los repositorios remotos vinculados al proyecto local, detallando las direcciones configuradas para lectura (`fetch`) y escritura (`push`).
+Muestra a qué repositorio remoto (URL de GitHub) está conectado nuestro proyecto local tanto para subir (`push`) como para descargar (`fetch`) datos.
 
 ### 4. ¿Qué diferencia hay entre `git add`, `git commit` y `git push`?
-- `git add`: Mueve las modificaciones del área de trabajo al área de ensayo (*Staging Area*), seleccionando qué cambios formarán parte del próximo commit.
-- `git commit`: Guarda de forma permanente las modificaciones preparadas en la base de datos local de Git con un mensaje descriptivo.
-- `git push`: Sube los commits guardados localmente al repositorio remoto en GitHub.
+- `git add`: Prepara los archivos modificados que queremos incluir en el siguiente guardado.
+- `git commit`: Guarda esos cambios en el historial de Git en nuestro ordenador con un mensaje explicativo.
+- `git push`: Sube esos commits guardados en local al repositorio de GitHub.
 
 ### 5. ¿Qué hace `--set-upstream`?
-Configura una relación de rastreo (*tracking*) entre la rama local actual y su rama correspondiente en el remoto (`origin`). Permite que en comandos posteriores solo tengamos que escribir `git push` o `git pull`.
+Conecta la rama de nuestro ordenador con la rama correspondiente en GitHub para que luego podamos usar `git push` y `git pull` directamente sin escribir el nombre de la rama cada vez.
 
 ### 6. ¿Qué diferencia hay entre `git push` y `git pull`?
-- `git push`: Envía la información **desde el local hacia el remoto** (subida).
-- `git pull`: Trae e integra la información **desde el remoto hacia el local** (descarga + merge).
+`git push` envía los cambios de nuestro PC a GitHub (subir), mientras que `git pull` trae e integra los cambios de GitHub a nuestro PC (descargar).
 
 ### 7. ¿Qué hace `git fetch`?
-Descarga las novedades, ramas y referencias enviadas al repositorio remoto desde la última sincronización, **sin aplicar ni fusionar** ningún cambio en los archivos de tu carpeta de trabajo.
+Descarga los datos e información nueva que hay en GitHub, pero sin modificar nuestros archivos de trabajo.
 
 ### 8. ¿Por qué después de `git fetch` puede que la imagen todavía no aparezca en nuestra carpeta?
-Porque `git fetch` solo actualiza el historial y punteros internos de Git (`origin/main`). No modifica los archivos físicos de tu directorio activo hasta que ejecutes un `git merge` o `git pull`.
+Porque `git fetch` solo actualiza el registro interno de Git sobre lo que hay en el remoto. Para que el archivo aparezca físicamente en la carpeta hay que hacer un `git pull` o `git merge`.
 
 ### 9. ¿Qué hace `git merge`?
-Combina el historial de commits y los cambios de una rama origen dentro de la rama actual en la que te encuentras posicionado.
+Junta los cambios y el historial de una rama dentro de otra rama (por ejemplo, juntar `feature/contacto` dentro de `main`).
 
 ### 10. ¿Qué diferencia hay entre la rama principal y `feature/contacto`?
-La rama principal (`main`) contiene el código estable de producción del proyecto. La rama `feature/contacto` es un entorno aislado donde se desarrolló específicamente la sección de contacto sin riesgo de romper la rama principal.
+La rama principal (`main`) contiene el proyecto base y estable, mientras que `feature/contacto` era la rama de trabajo aislada donde estuve creando la página de contacto.
 
 ### 11. ¿Qué ocurre con los commits cuando hacemos un merge?
-Los commits realizados en la rama de características se incorporan al historial de la rama destino. En fusiones *fast-forward*, el puntero de la rama simplemente avanza; en fusiones con divergencia, se genera un commit de merge (*merge commit*) que une ambas ramas.
+Los commits que habíamos hecho en la rama secundaria pasan a formar parte del historial de la rama principal.
 
 ### 12. ¿Qué ocurre cuando modificamos el repositorio desde GitHub y nuestro ordenador todavía no conoce ese cambio?
-Se produce una desincronización en la que el repositorio remoto está por delante del local. Si intentamos hacer `git push` sin haber hecho previamente `git pull`, Git rechazará el push exigiendo actualizar la rama local primero.
+El repositorio remoto se queda un paso por delante de nuestro ordenador. Si intentamos hacer `git push`, Git nos dará un error avisando de que primero debemos hacer `git pull` para estar actualizados.
 
 ### 13. ¿Para qué sirve `git log --oneline`?
-Muestra el historial de commits de forma compacta y resumida en una sola línea por commit, mostrando el hash abreviado y el mensaje del commit.
+Muestra el historial de commits de forma resumida (cada commit en una sola línea con su identificador y su mensaje).
