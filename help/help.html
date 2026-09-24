@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro de Ayuda - Pablo Flores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --border-color: #30363d;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent: #238636;
+      --accent-hover: #2ea043;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+    }
+    h1 { margin-bottom: 12px; font-size: 1.8rem; }
+    p.subtitle { color: var(--text-muted); margin-bottom: 24px; }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; color: #58a6ff; }
+    .faq-item p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Centro de Ayuda y Preguntas Frecuentes</h1>
+    <p class="subtitle">Encuentra respuestas rápidas sobre la práctica y el repositorio.</p>
+    
+    <div class="faq-item">
+      <h3>¿Cómo clonar este repositorio?</h3>
+      <p>Utiliza el comando <code>git clone URL_DEL_REPOSITORIO</code> en tu terminal para obtener una copia local en tu equipo.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>¿Qué diferencia hay entre git fetch y git pull?</h3>
+      <p><code>git fetch</code> descarga los objetos y referencias del repositorio remoto sin modificar tus archivos locales. <code>git pull</code> realiza la descarga e integra los cambios automáticamente en tu rama de trabajo actual.</p>
+    </div>
+  </div>
+</body>
+</html>
